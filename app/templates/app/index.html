@@ -1,0 +1,27 @@
+{% extends "app/layout_inicio.html" %}
+
+{% load staticfiles %}
+
+{% block content %}
+
+<div class="jumbotron" style="padding:15px">
+    <h3>ENVIOS - INTEGRACION Y GESTION</h3>
+</div>
+
+<div class="row">
+
+    <div class="col-md-4">
+
+        <p>
+            <a href="."> <img src="{% static 'app/images/recargar_24px.png' %}" alt="acceso" />Recargar</a>
+        </p>
+
+        <p>
+            {{CONTADOR}}        
+        </p>
+
+    </div>
+
+</div>
+
+{% endblock %}

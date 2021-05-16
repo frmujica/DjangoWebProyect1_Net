@@ -1,0 +1,50 @@
+{% extends "app/layout_inicio.html" %}
+
+{% block content %}
+
+<div class="jumbotron">
+    <h1>IronFroce - ACCESO</h1>
+</div>
+
+<div class="row">
+
+    <div class="col-md-4">
+
+        Estado antada: {{entrada_estado}}
+        
+
+        <form action="." method="post" class="form-horizontal">
+
+            {% csrf_token %}
+
+            <div class="form-group">
+                <label for="id_username" class="col-md-2 control-label">Usuario</label>
+                <input type="text" 
+                       name="usuario" 
+                       value="usuario1" 
+                       class="col-md-10" 
+                       style="border:1px solid #555; border-radius:5px; margin-left:10px">
+            </div>
+
+            <div class="form-group">
+                <label for="id_password" class="col-md-2 control-label">Calve</label>
+                <input type="text" 
+                       name="clave" 
+                       value="clave1" 
+                       class="col-md-10" 
+                       style="border:1px solid #555; border-radius:5px; margin-left:10px">
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="hidden" name="next" value="/" />
+                    <input type="submit" value="Entrar" class="btn btn-default" />
+                </div>
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}
