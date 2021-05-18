@@ -132,6 +132,9 @@
     <Content Include="app\static\app\images\terminos_24px.png" />
     <Content Include="app\static\app\images\terminos_48px.png" />
     <Content Include="app\static\app\images\terminos_72px.png" />
+    <Content Include="app\templates\app\ayuda.html" />
+    <Content Include="app\templates\app\soporte.html" />
+    <Content Include="app\templates\app\terminosycondiciones.html" />
     <Content Include="app\templates\app\layout_programa.html" />
     <Content Include="libman.json" />
     <Content Include="login\templates\login\acceso.html" />

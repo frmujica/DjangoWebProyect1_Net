@@ -17,3 +17,14 @@ def home(request):
 
     return render(request, 'app/index.html', {"CONTADOR" : settings.CONTADOR} )
 
+def terminosycondiciones(request):
+
+    return render(request, 'app/terminosycondiciones.html')
+
+def soporte(request):
+
+    return render(request, 'app/soporte.html')
+
+def ayuda(request):
+
+    return render(request, 'app/ayuda.html')

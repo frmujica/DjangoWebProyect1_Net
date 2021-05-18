@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Envios - {{ title }}</title>
+    {% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'app/content/bootstrap.min.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'app/content/site.css' %}" />
+    <script src="{% static 'app/scripts/modernizr-2.6.2.js' %}"></script>
+</head>
+
+<body>
+
+    <div class="jumbotron" style="padding:15px">
+        <h3>Soprote</h3>
+    </div>
+
+    <div class="row">
+
+        <div class="col-md-1"></div>
+        <div class="col-md-10">
+
+            <form action="mailto:frmujica@yahoo.es" method="post" enctype="text/plain">
+                <table>
+                    <tr>
+                        <td style="vertical-align:top">
+                            <label for="correo" class="form-control">Correo</label>
+                        </td>
+                        <td style="vertical-align:top">
+                            <input type="email" name="correo" id="correo" class="form-control"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="vertical-align:top">
+                            <label for="telefono" class="form-control">Telefono</label>
+                        </td>
+                        <td style="vertical-align:top">
+                            <input type="tel" name="telefono" id="telefono" class="form-control"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" style="vertical-align:top">
+                            <label for="descripcion" class="form-control">Descripcion de la solicutd</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" style="vertical-align:top">
+                            <textarea name="descripcion" id="descripcion" cols="10" rows="6" class="form-control"></textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" style="vertical-align:top">
+                            <button type="submit" id="enviar" name="enviar" class="btn btn-primary">Enviar</button>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+    </div>
+
+</body>
+
+</html>
+
+   
+
+    
+
+    

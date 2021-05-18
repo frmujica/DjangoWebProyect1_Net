@@ -36,9 +36,9 @@
             <footer>
                 <p>&copy; Envios</p>
                 <p>
-                    <a href="mailto:frmujica@gamil.com"> <img src="{% static 'app/images/contacto_24px.png' %}" alt="Soporte" /> Soporte</a> | 
-                    <a href="" target="_blank"> <img src="{% static 'app/images/ayuda_24px.png' %}" alt="Manual" /> Manual</a> | 
-                    <a href="" target="_blank"><img src="{% static 'app/images/terminos_24px.png' %}" alt="Terminaos y condiciones" /> Terminos y condiciones</a>
+                    <a href="{% url 'soporte' %}" target="_blank"> <img src="{% static 'app/images/contacto_24px.png' %}" alt="Soporte" /> Soporte</a> | 
+                    <a href="{% url 'ayuda' %}" target="_blank"> <img src="{% static 'app/images/ayuda_24px.png' %}" alt="Manual" /> Manual</a> | 
+                    <a href="{% url 'terminosycondiciones' %}" target="_blank"><img src="{% static 'app/images/terminos_24px.png' %}" alt="Terminaos y condiciones" /> Terminos y condiciones</a>
                 </p>
             </footer>
         </div>

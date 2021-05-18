@@ -15,5 +15,8 @@ from app import forms, views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.home, name='home'),
+    path('terminosycondiciones/', views.terminosycondiciones, name='terminosycondiciones'),
+    path('soporte/', views.soporte, name='soporte'),
+    path('ayuda/', views.ayuda, name='ayuda'),
     path('', include('login.urls')),
 ]
