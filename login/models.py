@@ -8,8 +8,8 @@ class usuarios(models.Model):
     usuario = models.CharField((""), max_length=50)
     clave = models.CharField((""), max_length=50)
     correo = models.CharField((""), max_length=50)
-    fecha_ultimo_acceso = models.DateField((""), auto_now=True)
-    hora_ultimo_acceso = models.DateTimeField((""), auto_now=True)
+    fecha_ultimo_acceso = models.CharField((""), max_length=50)
+    hora_ultimo_acceso = models.CharField((""), max_length=50)
     intentos = models.IntegerField((""))
     activo = models.BooleanField((""))
 
