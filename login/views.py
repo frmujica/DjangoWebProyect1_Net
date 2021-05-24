@@ -10,9 +10,12 @@ from . import models
 # Create your views here.
 
 msg = ''
-error = 0
+error = ''
 
 def acceso(request):
+    
+    global msg
+    global error
 
     try:
 
@@ -25,25 +28,28 @@ def acceso(request):
                 else:
                     settings.STAUS_LOGIN = False
             else:
+                msg = 'No ha indicado usuario/clave'
+                error = '1'
                 settings.STAUS_LOGIN = False
 
-            return render(request, 'login/acceso.html', {'entrada_estado': settings.STAUS_LOGIN, 'error':'0', 'msg':''})
+            return render(request, 'login/acceso.html', {'entrada_estado': settings.STAUS_LOGIN, 'POST':'True', 'error':error, 'msg':msg})
 
         else:
-            return render(request, 'login/acceso.html', {'entrada_estado': '', 'error':'', 'msg':''})
-
+            return render(request, 'login/acceso.html', {'entrada_estado': '', 'POST':'False', 'error':'', 'msg':''})
 
     except Exception as e:
 
         msg = str(e)
-        error = 1
+        error = '1'
         settings.STAUS_LOGIN = False
-        return render(request, 'login/acceso.html', {'entrada_estado': settings.STAUS_LOGIN, 'error':'1', 'msg':msg})
-
+        return render(request, 'login/acceso.html', {'entrada_estado': settings.STAUS_LOGIN, 'error':error, 'msg':msg})
 
 
 
 def validarUsuario(usuario, clave):
+
+    global msg
+    global error
 
     try:
 
@@ -71,21 +77,25 @@ def validarUsuario(usuario, clave):
                 return True
             else:
                 msg = 'usuario desactivado'
-                error = 1
+                error = '1'
                 return False
         else:
             guardarIntentoFallido(usuario)
             msg = 'usuario o clave incorrecta'
-            error = 1
+            error = '1'
             return False
 
     except Exception as e:
 
         msg = str(e)
-        error = 1
+        error = '1'
         return False
 
 def guardarIntentoFallido(usuario):
+    
+    global msg
+    global error
+
     try:
 
         usuario_fallido_select = models.usuarios.objects.using('usuarios').raw('''
@@ -128,9 +138,13 @@ def guardarIntentoFallido(usuario):
 
     except Exception as e:
         msg = str(e)
-        error = 1
+        error = '1'
 
 def guardarUltimaEntrada(usuario):
+    
+    global msg
+    global error
+
     try:
 
         today = datetime.now()
@@ -146,6 +160,7 @@ def guardarUltimaEntrada(usuario):
             WHERE 
                 usuario = "%s"
              ''' % (date, time, usuario)
+
 
         cursor = connections['usuarios'].cursor()
         cursor.execute(sql)
