@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from django.shortcuts import render, HttpResponse
+from django.shortcuts import render, HttpResponse, redirect
 from django.http import HttpRequest
 from django.conf import settings
 from django.db import connections
@@ -23,6 +23,9 @@ def acceso(request):
 
             if request.POST.get('usuario') != '' and request.POST.get('clave') != '':
             
+                if request.POST.get('terminos') != 'on':
+                    return render(request, 'login/acceso.html', {'entrada_estado': settings.STAUS_LOGIN, 'POST':'True', 'error':'1', 'msg':'Debe aceptar los terminos y condiciones'})
+
                 if ( validarUsuario(request.POST.get('usuario'), request.POST.get('clave')) ) == True:
                     settings.STAUS_LOGIN = True
                 else:
@@ -32,7 +35,10 @@ def acceso(request):
                 error = '1'
                 settings.STAUS_LOGIN = False
 
-            return render(request, 'login/acceso.html', {'entrada_estado': settings.STAUS_LOGIN, 'POST':'True', 'error':error, 'msg':msg})
+            if error == '0':
+                return render(request, 'login/acceso.html', {'entrada_estado': settings.STAUS_LOGIN, 'POST':'True', 'error':error, 'msg':msg})
+            else:
+                return redirect('/ordenes/nuevos/')
 
         else:
             return render(request, 'login/acceso.html', {'entrada_estado': '', 'POST':'False', 'error':'', 'msg':''})
@@ -44,6 +50,11 @@ def acceso(request):
         settings.STAUS_LOGIN = False
         return render(request, 'login/acceso.html', {'entrada_estado': settings.STAUS_LOGIN, 'error':error, 'msg':msg})
 
+def listaUsuarios(request):
+
+    usuarios = fun_listaUsuarios()
+
+    return render(request, 'login/listaUsuarios.html', {'usuarios': usuarios, 'error':error, 'msg':msg} )
 
 
 def validarUsuario(usuario, clave):
@@ -170,6 +181,28 @@ def guardarUltimaEntrada(usuario):
         error = 1
         pass
 
+def fun_listaUsuarios(ordenado = 'usuario', filtro = ''):
+    global msg
+    global error
+
+    try:
+
+        sql = 'SELECT id, usuario, clave, correo, fecha_ultimo_acceso, hora_ultimo_acceso, intentos, activo '
+        
+        if filtro != '':
+            sql += 'WHERE usuario like "%' + filtro + '%" OR correo like "%' + filtro + '%" '
+
+        sql += 'FROM usuarios '
+        sql += 'ORDER BY ' + ordenado
+        
+        first_person = models.usuarios.objects.using('usuarios').raw(sql)
+        return first_person
+
+    except Exception as e:
+
+        msg = str(e)
+        error = '1'
+        return False
 
 
     #rows = []

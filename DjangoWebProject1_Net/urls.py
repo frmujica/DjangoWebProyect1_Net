@@ -19,4 +19,5 @@ urlpatterns = [
     path('soporte/', views.soporte, name='soporte'),
     path('ayuda/', views.ayuda, name='ayuda'),
     path('', include('login.urls')),
+    path('', include('ordenes.urls')),
 ]

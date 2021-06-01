@@ -56,6 +56,14 @@
     <Compile Include="DjangoWebProject1_Net\settings.py" />
     <Compile Include="DjangoWebProject1_Net\urls.py" />
     <Compile Include="DjangoWebProject1_Net\wsgi.py" />
+    <Compile Include="ordenes\admin.py" />
+    <Compile Include="ordenes\apps.py" />
+    <Compile Include="ordenes\migrations\__init__.py" />
+    <Compile Include="ordenes\models.py" />
+    <Compile Include="ordenes\tests.py" />
+    <Compile Include="ordenes\urls.py" />
+    <Compile Include="ordenes\views.py" />
+    <Compile Include="ordenes\__init__.py" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="app\" />
@@ -74,6 +82,10 @@
     <Folder Include="login\migrations\" />
     <Folder Include="login\templates\" />
     <Folder Include="login\templates\login\" />
+    <Folder Include="ordenes\" />
+    <Folder Include="ordenes\migrations\" />
+    <Folder Include="ordenes\templates\" />
+    <Folder Include="ordenes\templates\ordenes\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="app\static\app\images\acceso_120px.png" />
@@ -137,7 +149,14 @@
     <Content Include="app\templates\app\terminosycondiciones.html" />
     <Content Include="app\templates\app\layout_programa.html" />
     <Content Include="libman.json" />
+    <Content Include="login\templates\login\editarusuario.html" />
+    <Content Include="login\templates\login\listaUsuarios.html" />
     <Content Include="login\templates\login\acceso.html" />
+    <Content Include="login\templates\login\nuevousuario.html" />
+    <Content Include="ordenes\templates\ordenes\seguimiento.html" />
+    <Content Include="ordenes\templates\ordenes\manifestados.html" />
+    <Content Include="ordenes\templates\ordenes\archivados.html" />
+    <Content Include="ordenes\templates\ordenes\nuevos.html" />
     <Content Include="requirements.txt" />
     <Content Include="db.sqlite3" />
     <Content Include="app\static\app\content\bootstrap.css" />

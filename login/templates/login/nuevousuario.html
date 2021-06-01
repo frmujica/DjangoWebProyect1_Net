@@ -1,0 +1,52 @@
+{% extends "app/layout_programa.html" %}
+
+{% load staticfiles %}
+
+
+{% block content %}
+
+<div class="row" style="padding:15px;">
+
+    <h3>Nuevo Usuario</h3>
+
+    <div class="col-md-12" 
+         id="capa-edicion" 
+         style="height:auto; margin: 0 auto; background:#AAA; padding:5px; display:none">
+
+        <form action="." method="Post">
+
+            <table>
+
+                <tr>
+                    <td style="width:10%; text-align:center"><label form="usuario">Usuario</label></td>
+                    <td style="width:10%; text-align:center"><label form="clave">Clave</label></td>
+                    <td style="width:15%; text-align:center"><label form="correo">Correo</label></td>
+                    <td style="width:10%; text-align:center"><label form="activo">Activo</label></td>
+                </tr>
+
+                <tr>
+                    <td><input type="text" class="form-control form-control-sm" id="usuario" name="usuario" required></td> 
+                    <td><input type="password" class="form-control form-control-sm" id="clave" name="clave" required></td> 
+                    <td><input type="email" class="form-control form-control-sm" id="correo" name="correo" required></td> 
+                    <td><input type="checkbox" class="form-control form-control-sm" id="activo" name="activo"></td> 
+                </tr>
+
+                <tr>
+                    <td colspan="9" style="text-aling:center">
+                        <button type="submit" class="btn btn-primary">Guardar</button>
+                        <button type="submit" class="btn btn-primary">Eliminar</button>
+                        <a href="" class="btn btn-info">Volver</a>
+                    </td>
+                </tr>
+
+            </table>
+            
+        </form>
+
+    </div>
+
+{% endblock %}
+
+
+{% block scripts %}
+{% endblock %}

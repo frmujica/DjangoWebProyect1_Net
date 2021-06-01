@@ -1,0 +1,90 @@
+{% extends "app/layout_programa.html" %}
+
+{% load staticfiles %}
+
+{% block content %}
+
+
+    <div class="col-md-12" style="height:auto; margin: 0 auto; background:#EEE;">
+        Filtrar
+        <input type="text" class="form-control form-control-sm" id="filtro" name="filtro">
+    </div>
+
+    <div class="col-md-12" style="height:400px; margin: 0 auto; background:#EEE;">
+        
+        <div class="col-md-12" style="">
+            <div class="col-md-1"></div>
+            <div class="col-md-2">Usuario</div>
+            <div class="col-md-1">Clave</div>
+            <div class="col-md-2">Correo</div>
+            <div class="col-md-2">fecha_ultimo_acceso</div>
+            <div class="col-md-2">hora_ultimo_acceso</div>
+            <div class="col-md-1">intentos</div>
+            <div class="col-md-1">Activo</div>
+        </div>
+
+        <div class="col-md-12" style="">
+
+        {% for row in usuarios %}
+
+            <div class="col-md-12" style="display:inline-block;">
+
+                <div class="col-md-1">
+                    <button class="btn btn-success btn-sm" id="editar" name="Editar" onclick="editar({{ forloop.counter }});">
+                        <img src="{% static 'app/images/configuracion_24px.png' %}" alt="Soporte" style="width:12px" />
+                    </button>
+                </div>
+
+                <div class="col-md-2" style="text-align:left">[{{ row.id }}] {{ row.usuario }}</div>
+                <div class="col-md-1" style="text-align:left">{{ row.clave }}</div>
+                <div class="col-md-2" style="text-align:center">{{ row.correo }}</div>
+                <div class="col-md-2">{{ row.fecha_ultimo_acceso }}</div>
+                <div class="col-md-2" style="text-align:center">{{ row.hora_ultimo_acceso }}</div>
+                <div class="col-md-1">{{ row.intentos }}</div>
+                <div class="col-md-1" style="text-align:center">{{ row.activo }}</div>
+
+            </div>
+            
+        {% endfor %}
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
+
+
+{% block scripts %}
+
+<script>
+
+    function editar(fila){
+        //alert(fila);
+        $("#capa-edicion").show();
+        //console.log( {{ usuario.fila.id }} )
+    }
+
+    function cancelar(e){
+        event.preventDefault();
+        $("#capa-edicion").hide();
+    }
+
+    function nuevo(){
+        $("#capa-edicion").show();
+    }
+
+    function guardarnuevo(){
+    }
+
+    function actualizar(){
+    }
+
+    function eliminar(){
+    }
+
+</script>
+
+{% endblock %}
+
