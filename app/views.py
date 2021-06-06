@@ -16,7 +16,7 @@ def home(request):
     servicios.temporizadores.start_job1()
 
     return render(request, 'app/index.html', {"CONTADOR" : settings.CONTADOR} )
-
+    
 def terminosycondiciones(request):
 
     return render(request, 'app/terminosycondiciones.html')

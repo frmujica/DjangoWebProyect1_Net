@@ -4,26 +4,108 @@
 
 {% block content %}
 
+    <div class="row" style="height:auto; margin: 0 auto; margin-bottom:15px; background:#EEE;text-align:center">
+        <div class="col-md-4"></div>
+        <div class="col-md-1"><label for="filtro" class="control-label">Filtrar</label></div>
+        <div class="col-md-2">
+            <input  type="text" 
+                    class="form-control form-control-sm" 
+                    id="filtro" 
+                    name="filtro" 
+                    onInput="filtrar();">
+        </div>
 
-    <div class="col-md-12" style="height:auto; margin: 0 auto; background:#EEE;">
-        Filtrar
-        <input type="text" class="form-control form-control-sm" id="filtro" name="filtro">
     </div>
 
     <div class="col-md-12" style="height:400px; margin: 0 auto; background:#EEE;">
         
-        <div class="col-md-12" style="">
+        <div class="col-md-12" style="display:inline-block;">
             <div class="col-md-1"></div>
-            <div class="col-md-2">Usuario</div>
-            <div class="col-md-1">Clave</div>
-            <div class="col-md-2">Correo</div>
-            <div class="col-md-2">fecha_ultimo_acceso</div>
-            <div class="col-md-2">hora_ultimo_acceso</div>
-            <div class="col-md-1">intentos</div>
-            <div class="col-md-1">Activo</div>
+            <div class="col-md-2" style="text-align:center">Usuario</div>
+            <div class="col-md-1" style="text-align:center">Clave</div>
+            <div class="col-md-2" style="text-align:center">Correo</div>
+            <div class="col-md-2" style="text-align:center">fecha_ultimo_acceso</div>
+            <div class="col-md-2" style="text-align:center">hora_ultimo_acceso</div>
+            <div class="col-md-1" style="text-align:center">intentos</div>
+            <div class="col-md-1" style="text-align:center">Activo</div>
         </div>
 
-        <div class="col-md-12" style="">
+        <div class="col-md-12" style="margin:0; padding:0" id="contenido"></div>
+
+    </div>
+
+</div>
+
+{% endblock %}
+
+
+{% block scripts %}
+
+<script>
+
+    usuariosjstxt = '{{usuariosjs|safe}}';
+    const usuariosjson = JSON.parse(usuariosjstxt );
+
+    $( document ).ready(function() {
+        
+        generartabla( usuariosjson );        
+       
+    });
+
+
+    function generartabla( usuariosjson ){
+
+            contenido = '';
+
+            for (var i = 0; i < usuariosjson.length; i++) {
+
+                contenido += '<div class="col-md-12" style="display:inline-block;">';
+
+                    contenido += '<div class="col-md-1">';
+                        contenido += '<a href="/acceso/editarusuario/' + usuariosjson[i].pk + '/" class="btn btn-success btn-sm">';
+                            contenido += '<img src="{% static 'app/images/configuracion_24px.png' %}" alt="Soporte" style="width:12px" />';
+                        contenido += '</a>';
+                    contenido += '</div>';
+
+                    contenido += '<div class="col-md-2" style="text-align:center;">[' + usuariosjson[i].pk + '] ' + usuariosjson[i].fields.usuario + '</div>';
+
+                    contenido += '<div class="col-md-1" style="text-align:center">' + usuariosjson[i].fields.clave + '</div>';
+
+                    contenido += '<div class="col-md-2" style="text-align:center">' + usuariosjson[i].fields.correo + '</div>';
+
+                    contenido += '<div class="col-md-2" style="text-align:center">' + usuariosjson[i].fields.fecha_ultimo_acceso + ' </div>';
+
+                    contenido += '<div class="col-md-2" style="text-align:center">' + usuariosjson[i].fields.hora_ultimo_acceso + '</div>';
+
+                    contenido += '<div class="col-md-1" style="text-align:center">' + usuariosjson[i].fields.intentos + '</div>';
+
+                    contenido += '<div class="col-md-1" style="text-align:center">' + usuariosjson[i].fields.activo + '</div>';
+
+                contenido += '</div>';
+                
+            }
+
+            $("#contenido").html(contenido);
+
+        }
+
+
+    function filtrar(){
+            texto = $("#filtro").val();
+            var usuarios_filter = usuariosjson.filter( function(element){
+                    return element.fields.usuario.indexOf(texto) >= 0 || element.fields.correo.indexOf(texto) >= 0 || element.pk.toString().indexOf(texto) >= 0 || element.fields.fecha_ultimo_acceso.indexOf(texto) >= 0 || element.fields.activo.indexOf(texto) >= 0 
+            });
+            generartabla( usuarios_filter );
+    }
+   
+</script>
+
+{% endblock %}
+
+
+
+
+<!--
 
         {% for row in usuarios %}
 
@@ -47,44 +129,4 @@
             
         {% endfor %}
 
-        </div>
-
-    </div>
-
-</div>
-
-{% endblock %}
-
-
-{% block scripts %}
-
-<script>
-
-    function editar(fila){
-        //alert(fila);
-        $("#capa-edicion").show();
-        //console.log( {{ usuario.fila.id }} )
-    }
-
-    function cancelar(e){
-        event.preventDefault();
-        $("#capa-edicion").hide();
-    }
-
-    function nuevo(){
-        $("#capa-edicion").show();
-    }
-
-    function guardarnuevo(){
-    }
-
-    function actualizar(){
-    }
-
-    function eliminar(){
-    }
-
-</script>
-
-{% endblock %}
-
+        -->

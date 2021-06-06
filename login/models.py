@@ -16,6 +16,7 @@ class usuarios(models.Model):
     class Meta:
         verbose_name = "usuarios"
 
+
 class usuarios_logs(models.Model):
 
     id = models.IntegerField(primary_key=True)

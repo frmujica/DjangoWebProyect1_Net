@@ -5,12 +5,15 @@ from django.http import HttpRequest
 from django.conf import settings
 from django.db import connections
 
+from django.core import serializers
+
 from . import models
 
 # Create your views here.
 
 msg = ''
 error = ''
+
 
 def acceso(request):
     
@@ -52,9 +55,62 @@ def acceso(request):
 
 def listaUsuarios(request):
 
-    usuarios = fun_listaUsuarios()
+    usuarios, usuariosjs = fun_listaUsuarios()
 
-    return render(request, 'login/listaUsuarios.html', {'usuarios': usuarios, 'error':error, 'msg':msg} )
+    return render(request, 'login/listaUsuarios.html', {'usuarios': usuarios, 'usuariosjs': usuariosjs, 'error':error, 'msg':msg} )
+
+def editarusuario(request, id):
+
+    usuario, usuariojs = fun_buscarusuariosporId(id)
+
+    return render(request, 'login/editarusuario.html', {'usuario': usuario, 'usuariojs': usuariojs, 'error':error, 'msg':msg} )
+
+def actualizarusuario(request):
+
+    global msg
+    global error
+
+    try:
+       
+        if request.method == 'POST':
+
+            if request.POST.get('usuario') != '' and request.POST.get('clave') != '' and request.POST.get('correo') != '':
+            
+                miusuario = models.usuarios()
+                miusuario.id = request.POST.get('id')
+                miusuario.usuario = request.POST.get('usuario')
+                miusuario.clave = request.POST.get('clave')
+                miusuario.correo = request.POST.get('correo')
+                miusuario.fecha_ultima_entrada = request.POST.get('fecha_ultima_entrada')
+                miusuario.hora_ultima_entrada = request.POST.get('hora_ultima_entrada')
+                miusuario.intentos = request.POST.get('intentos')
+                miusuario.activo = request.POST.get('activo')
+                
+                fun_actualizarusuario(miusuario)
+
+                if  error == '0' or error == '':
+                    usuarios, usuariosjs = fun_listaUsuarios()
+                    return render(request, 'login/listaUsuarios.html', {'usuarios': usuarios, 'usuariosjs': usuariosjs, 'error':error, 'msg':msg} )
+                else:
+                    usuario, usuariojs = fun_buscarusuariosporId(id)
+                    return render(request, 'login/editarusuario.html', {'usuario': usuario, 'usuariojs': usuariojs, 'error':error, 'msg':msg} )
+            else:
+                msg = 'cumplimnete todos los campos'
+                error = 1
+                usuario, usuariojs = fun_buscarusuariosporId(id)
+                return render(request, 'login/editarusuario.html', {'usuario': usuario, 'usuariojs': usuariojs, 'error':error, 'msg':msg} )
+
+    except Exception as e:
+
+        msg = str(e)
+        error = '1'
+        usuario, usuariojs = fun_buscarusuariosporId(id)
+        return render(request, 'login/editarusuario.html', {'usuario': usuario, 'usuariojs': usuariojs, 'error':error, 'msg':msg} )
+        
+
+
+# Funciones locales a la vista
+# ============================
 
 
 def validarUsuario(usuario, clave):
@@ -193,16 +249,85 @@ def fun_listaUsuarios(ordenado = 'usuario', filtro = ''):
             sql += 'WHERE usuario like "%' + filtro + '%" OR correo like "%' + filtro + '%" '
 
         sql += 'FROM usuarios '
+
         sql += 'ORDER BY ' + ordenado
         
-        first_person = models.usuarios.objects.using('usuarios').raw(sql)
-        return first_person
+        usuarios = models.usuarios.objects.using('usuarios').raw(sql)
+
+        usuariosjs = serializers.serialize('json', usuarios, fields=('id', 'usuario', 'clave', 'correo', 'fecha_ultimo_acceso', 'hora_ultimo_acceso', 'intentos', 'activo'))
+
+        return usuarios, usuariosjs
 
     except Exception as e:
 
         msg = str(e)
         error = '1'
-        return False
+        return False, False
+
+def fun_buscarusuariosporId(id):
+    global msg
+    global error
+
+    try:
+
+        sql = 'SELECT id, usuario, clave, correo, fecha_ultimo_acceso, hora_ultimo_acceso, intentos, activo '
+        
+        sql += 'FROM usuarios '
+
+        sql += 'WHERE id = ' + id 
+        
+        usuario = models.usuarios.objects.using('usuarios').raw(sql)
+
+        usuariojs = serializers.serialize('json', usuario, fields=('id', 'usuario', 'clave', 'correo', 'fecha_ultimo_acceso', 'hora_ultimo_acceso', 'intentos', 'activo'))
+
+        return usuario, usuariojs
+
+    except Exception as e:
+
+        msg = str(e)
+        error = '1'
+        return False, False
+
+def fun_actualizarusuario(usuario):
+
+    global msg
+    global error
+
+    try:
+
+        today = datetime.now()
+        date = today.strftime("%Y-%m-%d")
+        time = today.strftime("%H:%M:%S")
+
+        sql = '''
+            UPDATE 
+                usuarios 
+            SET 
+                usuario = "%s",
+                clave = "%s",
+                correo = "%s",
+                intentos = %s,
+                activo = "%s"
+            WHERE 
+                id = "%s"
+             ''' % (usuario.usuario, usuario.clave, usuario.correo, usuario.intentos, usuario.activo, usuario.id)
+
+
+        cursor = connections['usuarios'].cursor()
+        cursor.execute(sql)
+   
+    except Exception as e:
+        msg = str(e)
+        error = 1
+        pass
+
+
+
+
+
+
+
+
 
 
     #rows = []

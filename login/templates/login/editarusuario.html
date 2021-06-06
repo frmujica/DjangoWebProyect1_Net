@@ -7,25 +7,27 @@
 
 <div class="row" style="padding:15px;">
 
-    <h3>Nuevo Usuario</h3>
-
+    <h3>Edicion Usuario</h3>
+    
     <div class="col-md-12" 
          id="capa-edicion" 
-         style="height:auto; margin: 0 auto; background:#AAA; padding:5px; display:none">
+         style="height:auto; margin: 0 auto; background:#EEE; padding:5px;">
 
-        <form action="." method="Post">
+        <form action="/acceso/actualizarusuario/" method="Post">
+
+            {% csrf_token %}
 
             <table>
 
                 <tr>
-                    <td style="width:10%; text-align:center"><label form="usuario">Id</label></td>
-                    <td style="width:10%; text-align:center"><label form="usuario">Usuario</label></td>
-                    <td style="width:10%; text-align:center"><label form="clave">Clave</label></td>
-                    <td style="width:15%; text-align:center"><label form="correo">Correo</label></td>
-                    <td style="width:15%; text-align:center"><label form="correo">Fecha Ultimo Acceso</label></td>
-                    <td style="width:15%; text-align:center"><label form="correo">Hora Ultimo Acceso</label></td>
-                    <td style="width:15%; text-align:center"><label form="correo">Intentos</label></td>
-                    <td style="width:10%; text-align:center"><label form="activo">Activo</label></td>
+                    <td style="width:5%; text-align:center"><label form="id">Id</label></td>
+                    <td style="width:15%; text-align:center"><label form="usuario">Usuario</label></td>
+                    <td style="width:15%; text-align:center"><label form="clave">Clave</label></td>
+                    <td style="width:20%; text-align:center"><label form="correo">Correo</label></td>
+                    <td style="width:15%; text-align:center"><label form="fecha_ultimo_acceso">Fecha Ultimo Acceso</label></td>
+                    <td style="width:15%; text-align:center"><label form="hora_ultimo_acceso">Hora Ultimo Acceso</label></td>
+                    <td style="width:5%; text-align:center"><label form="intentos">Intentos</label></td>
+                    <td style="width:5%; text-align:center"><label form="activo">Activo</label></td>
                 </tr>
 
                 <tr>
@@ -57,4 +59,24 @@
 
 
 {% block scripts %}
+
+<script>
+
+    usuariojstxt = '{{usuariojs|safe}}';
+    const usuariojson = JSON.parse(usuariojstxt);
+
+    $( document ).ready(function() {
+        
+        $("#id").val(usuariojson[0].pk);
+        $("#usuario").val(usuariojson[0].fields.usuario);
+        $("#clave").val(usuariojson[0].fields.clave);
+        $("#correo").val(usuariojson[0].fields.correo);
+        $("#fecha_ultimo_acceso").val(usuariojson[0].fields.fecha_ultimo_acceso);
+        $("#hora_ultimo_acceso").val(usuariojson[0].fields.hora_ultimo_acceso);
+        $("#intentos").val(usuariojson[0].fields.intentos);
+        $("#activo").val(usuariojson[0].fields.activo);
+    });
+   
+</script>
+
 {% endblock %}
