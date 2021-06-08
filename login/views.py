@@ -6,6 +6,7 @@ from django.conf import settings
 from django.db import connections
 
 from django.core import serializers
+import json
 
 from . import models
 
@@ -76,28 +77,34 @@ def actualizarusuario(request):
 
             if request.POST.get('usuario') != '' and request.POST.get('clave') != '' and request.POST.get('correo') != '':
             
-                miusuario = models.usuarios()
-                miusuario.id = request.POST.get('id')
-                miusuario.usuario = request.POST.get('usuario')
-                miusuario.clave = request.POST.get('clave')
-                miusuario.correo = request.POST.get('correo')
-                miusuario.fecha_ultima_entrada = request.POST.get('fecha_ultima_entrada')
-                miusuario.hora_ultima_entrada = request.POST.get('hora_ultima_entrada')
-                miusuario.intentos = request.POST.get('intentos')
-                miusuario.activo = request.POST.get('activo')
+                if request.POST.get('guardar') == 'guardar':
+
+                    miusuario = models.usuarios()
+                    miusuario.id = request.POST.get('id')
+                    miusuario.usuario = request.POST.get('usuario')
+                    miusuario.clave = request.POST.get('clave')
+                    miusuario.correo = request.POST.get('correo')
+                    #miusuario.fecha_ultima_entrada = request.POST.get('fecha_ultima_entrada')
+                    #miusuario.hora_ultima_entrada = request.POST.get('hora_ultima_entrada')
+                    miusuario.intentos = request.POST.get('intentos')
+                    miusuario.activo = request.POST.get('activo')
                 
-                fun_actualizarusuario(miusuario)
+                    fun_actualizarusuario(miusuario)
+
+                if request.POST.get('eliminar') == 'eliminar':
+                    fun_eliminarusuario(request.POST.get('id'))
+
 
                 if  error == '0' or error == '':
                     usuarios, usuariosjs = fun_listaUsuarios()
                     return render(request, 'login/listaUsuarios.html', {'usuarios': usuarios, 'usuariosjs': usuariosjs, 'error':error, 'msg':msg} )
                 else:
-                    usuario, usuariojs = fun_buscarusuariosporId(id)
+                    usuario, usuariojs = fun_buscarusuariosporId(request.POST.get('id'))
                     return render(request, 'login/editarusuario.html', {'usuario': usuario, 'usuariojs': usuariojs, 'error':error, 'msg':msg} )
             else:
-                msg = 'cumplimnete todos los campos'
+                msg = 'cumplimente todos los campos'
                 error = 1
-                usuario, usuariojs = fun_buscarusuariosporId(id)
+                usuario, usuariojs = fun_buscarusuariosporId(request.POST.get('id'))
                 return render(request, 'login/editarusuario.html', {'usuario': usuario, 'usuariojs': usuariojs, 'error':error, 'msg':msg} )
 
     except Exception as e:
@@ -106,7 +113,47 @@ def actualizarusuario(request):
         error = '1'
         usuario, usuariojs = fun_buscarusuariosporId(id)
         return render(request, 'login/editarusuario.html', {'usuario': usuario, 'usuariojs': usuariojs, 'error':error, 'msg':msg} )
-        
+ 
+def nuevousuario(request):
+
+    global msg
+    global error
+
+    try:
+       
+        if request.method == 'POST':
+
+            if request.POST.get('usuario') != '' and request.POST.get('clave') != '' and request.POST.get('correo') != '':
+            
+                miusuario = models.usuarios()
+                miusuario.usuario = request.POST.get('usuario')
+                miusuario.clave = request.POST.get('clave')
+                miusuario.correo = request.POST.get('correo')
+                miusuario.activo = request.POST.get('activo')
+                
+                fun_guardarnuevousuario(miusuario)
+
+                if  error == '0' or error == '':
+                    usuarios, usuariosjs = fun_listaUsuarios()
+                    return render(request, 'login/listaUsuarios.html', {'usuarios': usuarios, 'usuariosjs': usuariosjs, 'error':error, 'msg':msg} )
+                else:
+                    return render(request, 'login/nuevousuario.html', {'error':error, 'msg':msg} )
+            else:
+                msg = 'cumplimente todos los campos'
+                error = 1
+                return render(request, 'login/nuevousuario.html', {'error':error, 'msg':msg} )
+        else:
+
+            return render(request, 'login/nuevousuario.html', {'error':error, 'msg':msg} )
+
+    except Exception as e:
+
+        msg = str(e)
+        error = '1'
+        usuario, usuariojs = fun_buscarusuariosporId(id)
+        return render(request, 'login/nuevousuario.html', {'error':error, 'msg':msg} )
+
+
 
 
 # Funciones locales a la vista
@@ -321,7 +368,43 @@ def fun_actualizarusuario(usuario):
         error = 1
         pass
 
+def fun_eliminarusuario(id):
 
+    global msg
+    global error
+
+    try:
+        sql = '''
+            DELETE FROM usuarios 
+            WHERE id = "%s"
+             ''' % (id)
+
+        cursor = connections['usuarios'].cursor()
+        cursor.execute(sql)
+   
+    except Exception as e:
+        msg = str(e)
+        error = 1
+        pass
+
+def fun_guardarnuevousuario(usuario):
+    
+    global msg
+    global error
+
+    try:
+
+        sql = '''
+            INSERT INTO usuarios (usuario, clave, correo, intentos, activo) VALUES ("%s", "%s", "%s", 0, "%s") 
+             ''' % (usuario.usuario, usuario.clave, usuario.correo, usuario.activo)
+
+        cursor = connections['usuarios'].cursor()
+        cursor.execute(sql)
+   
+    except Exception as e:
+        msg = str(e)
+        error = 1
+        pass
 
 
 

@@ -7,6 +7,7 @@ urlpatterns = [
     path('acceso/listadousuarios/', views.listaUsuarios, name="listadousuarios"),
     path('acceso/editarusuario/<str:id>/', views.editarusuario, name="editarusuario"),
     path('acceso/actualizarusuario/', views.actualizarusuario, name="actualizarusuario"),
+    path('acceso/nuevousuario/', views.nuevousuario, name="nuevousuario"),
     
     #path('setup/<str:id>/', views.setuprefrehs, name="setuprefrehs"),
 ]

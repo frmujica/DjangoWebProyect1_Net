@@ -11,31 +11,38 @@
 
     <div class="col-md-12" 
          id="capa-edicion" 
-         style="height:auto; margin: 0 auto; background:#AAA; padding:5px; display:none">
+         style="height:auto; margin: 0 auto; background:#EEE; padding:10px;">
 
-        <form action="." method="Post">
+        <form action="/acceso/nuevousuario/" method="Post">
+
+            {% csrf_token %}
 
             <table>
 
                 <tr>
-                    <td style="width:10%; text-align:center"><label form="usuario">Usuario</label></td>
-                    <td style="width:10%; text-align:center"><label form="clave">Clave</label></td>
-                    <td style="width:15%; text-align:center"><label form="correo">Correo</label></td>
-                    <td style="width:10%; text-align:center"><label form="activo">Activo</label></td>
+                    <td style="width:15%; class="text-align:center"><label form="usuario">Usuario</label></td>
+                    <td style="width:15%; class="text-align:center"><label form="clave">Clave</label></td>
+                    <td style="width:20%; class="text-align:center"><label form="correo">Correo</label></td>
+                    <td style="width:10%; class="text-align:center"><label form="activo">Activo</label></td>
+                    <td style="width:40%; class="text-align:center"></td>
                 </tr>
 
                 <tr>
-                    <td><input type="text" class="form-control form-control-sm" id="usuario" name="usuario" required></td> 
-                    <td><input type="password" class="form-control form-control-sm" id="clave" name="clave" required></td> 
-                    <td><input type="email" class="form-control form-control-sm" id="correo" name="correo" required></td> 
-                    <td><input type="checkbox" class="form-control form-control-sm" id="activo" name="activo"></td> 
+                    <td><input type="text"  class="form-control form-control-sm text-center" id="usuario" name="usuario" required></td> 
+                    <td><input type="text"  class="form-control form-control-sm text-center" id="clave"   name="clave"   required></td> 
+                    <td><input type="email" class="form-control form-control-sm text-center" id="correo"  name="correo"  required></td> 
+                    <td>
+                        <select id="activo" name="activo" class="form-control form-control-sm text-center">
+                            <option value="True" selected>True</option>
+                            <option value="False">False</option>
+                        </select>
+                    </td> 
                 </tr>
 
                 <tr>
-                    <td colspan="9" style="text-aling:center">
+                    <td colspan="9" style="text-aling:center; padding-top:15px; padding-left:30px">
                         <button type="submit" class="btn btn-primary">Guardar</button>
-                        <button type="submit" class="btn btn-primary">Eliminar</button>
-                        <a href="" class="btn btn-info">Volver</a>
+                        <a href="/acceso/listadousuarios/" class="btn btn-info">Volver</a>
                     </td>
                 </tr>
 
@@ -44,6 +51,8 @@
         </form>
 
     </div>
+
+    <div style="color:red">{{msg}}</div>
 
 {% endblock %}
 

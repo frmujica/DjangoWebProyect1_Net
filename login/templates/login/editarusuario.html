@@ -11,7 +11,7 @@
     
     <div class="col-md-12" 
          id="capa-edicion" 
-         style="height:auto; margin: 0 auto; background:#EEE; padding:5px;">
+         style="height:auto; margin: 0 auto; background:#EEE; padding:10px;">
 
         <form action="/acceso/actualizarusuario/" method="Post">
 
@@ -26,32 +26,48 @@
                     <td style="width:20%; text-align:center"><label form="correo">Correo</label></td>
                     <td style="width:15%; text-align:center"><label form="fecha_ultimo_acceso">Fecha Ultimo Acceso</label></td>
                     <td style="width:15%; text-align:center"><label form="hora_ultimo_acceso">Hora Ultimo Acceso</label></td>
-                    <td style="width:5%; text-align:center"><label form="intentos">Intentos</label></td>
-                    <td style="width:5%; text-align:center"><label form="activo">Activo</label></td>
+                    <td style="width:05%; text-align:center"><label form="intentos">Intentos</label></td>
+                    <td style="width:10%; text-align:center"><label form="activo">Activo</label></td>
                 </tr>
 
                 <tr>
-                    <td><input type="text" class="form-control form-control-sm" id="id" name="id" readonly=true></td> 
-                    <td><input type="text" class="form-control form-control-sm" id="usuario" name="usuario" required></td> 
-                    <td><input type="password" class="form-control form-control-sm" id="clave" name="clave"   required></td> 
-                    <td><input type="email" class="form-control form-control-sm" id="correo" name="correo"  required></td> 
-                    <td><input type="date" class="form-control form-control-sm" id="fecha_ultimo_acceso" name="fecha_ultimo_acceso"  readonly></td> 
-                    <td><input type="date" class="form-control form-control-sm" id="hora_ultimo_acceso" name="hora_ultimo_acceso"  readonly></td> 
-                    <td><input type="number" class="form-control form-control-sm" id="intentos" name="intentos"></td> 
-                    <td><input type="checkbox" class="form-control form-control-sm" id="activo" name="activo"></td> 
+                    <td><input type="text" class="form-control form-control-sm text-center" id="id" name="id" readonly=true></td> 
+                    <td><input type="text" class="form-control form-control-sm text-center" id="usuario" name="usuario" required></td> 
+                    <td><input type="text" class="form-control form-control-sm text-center" id="clave" name="clave"   required></td> 
+                    <td><input type="email" class="form-control form-control-sm text-center" id="correo" name="correo"  required></td> 
+                    <td><div class="text-center" id="fecha_ultimo_acceso" name="fecha_ultimo_acceso"></div></td> 
+                    <td><div class="text-center" id="hora_ultimo_acceso" name="hora_ultimo_acceso"></div></td> 
+                    <td><input type="number" class="form-control form-control-sm text-center" id="intentos" name="intentos"></td> 
+                    <td>
+                        <select id="activo" name="activo" class="form-control form-control-sm text-center">
+                            <option value="True">True</option>
+                            <option value="False">False</option>
+                        </select>
+                    </td> 
                 </tr>
 
                 <tr>
-                    <td colspan="9" style="text-aling:center">
-                        <button type="submit" class="btn btn-primary">Guardar</button>
-                        <button type="submit" class="btn btn-primary">Eliminar</button>
-                        <a href="" class="btn btn-info">Volver</a>
+                    <td colspan="9" style="text-aling:center; padding-top:15px; padding-left:30px">
+                        <button type="submit" id="guardar" name="guardar" value="guardar" class="btn btn-primary">Guardar</button>
+                        <button type="submit" 
+                                id="eliminar" 
+                                name="eliminar" 
+                                value="eliminar" 
+                                class="btn btn-primary" 
+                                onclick="return confirm('Confirme la eliminacion del usuario')">
+                            Eliminar
+                        </button>
+                        <a href="/acceso/listadousuarios/" class="btn btn-info">Volver</a>
                     </td>
                 </tr>
 
             </table>
             
         </form>
+
+        <div style="color:red">
+            {{msg}}
+        </div>
 
     </div>
 
@@ -71,8 +87,8 @@
         $("#usuario").val(usuariojson[0].fields.usuario);
         $("#clave").val(usuariojson[0].fields.clave);
         $("#correo").val(usuariojson[0].fields.correo);
-        $("#fecha_ultimo_acceso").val(usuariojson[0].fields.fecha_ultimo_acceso);
-        $("#hora_ultimo_acceso").val(usuariojson[0].fields.hora_ultimo_acceso);
+        $("#fecha_ultimo_acceso").text(usuariojson[0].fields.fecha_ultimo_acceso);
+        $("#hora_ultimo_acceso").text(usuariojson[0].fields.hora_ultimo_acceso);
         $("#intentos").val(usuariojson[0].fields.intentos);
         $("#activo").val(usuariojson[0].fields.activo);
     });
