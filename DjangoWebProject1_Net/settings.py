@@ -83,6 +83,10 @@ DATABASES = {
     'usuarios': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'usuarios.sqlite3'),
+    },
+    'ordenes': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'ordenes.sqlite3'),
     }
 }
 

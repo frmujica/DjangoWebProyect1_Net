@@ -22,17 +22,17 @@ class ordenes_origen(models.Model):
     referencia = models.CharField((""), max_length=50)
     orden = models.CharField((""), max_length=50)
 
-    nombre_origen = models.CharField((""), max_length=50)
-    compania_origen = models.CharField((""), max_length=50)
-    telefono_origen = models.CharField((""), max_length=50)
-    correo_origen = models.CharField((""), max_length=50)
-    direccion_origen = models.CharField((""), max_length=130)
-    suburbio_origen = models.CharField((""), max_length=130)
-    ciudad_origen = models.CharField((""), max_length=50)
-    codigo_postal_origen = models.CharField((""), max_length=50)
-    estado_origen = models.CharField((""), max_length=50)
-    pais_origen = models.CharField((""), max_length=50)
-    pais_origen_iso = models.CharField((""), max_length=50)
+    nombre = models.CharField((""), max_length=50)
+    compania = models.CharField((""), max_length=50)
+    telefono = models.CharField((""), max_length=50)
+    correo = models.CharField((""), max_length=50)
+    direccion = models.CharField((""), max_length=130)
+    suburbio = models.CharField((""), max_length=130)
+    ciudad = models.CharField((""), max_length=50)
+    codigo_postal = models.CharField((""), max_length=50)
+    estado = models.CharField((""), max_length=50)
+    pais = models.CharField((""), max_length=50)
+    pais_iso = models.CharField((""), max_length=50)
     
 
     class Meta:
@@ -46,17 +46,17 @@ class ordenes_destino(models.Model):
     referencia = models.CharField((""), max_length=50)
     orden = models.CharField((""), max_length=50)
 
-    nombre_destino = models.CharField((""), max_length=50)
-    compania_destino = models.CharField((""), max_length=50)
-    telefono_destino = models.CharField((""), max_length=50)
-    correo_destino = models.CharField((""), max_length=50)
-    direccion_destino = models.CharField((""), max_length=130)
-    suburbio_destino = models.CharField((""), max_length=130)
-    ciudad_destino = models.CharField((""), max_length=50)
-    codigo_postal_destino = models.CharField((""), max_length=50)
-    estado_destino = models.CharField((""), max_length=50)
-    pais_destino = models.CharField((""), max_length=50)
-    pais_destino_iso = models.CharField((""), max_length=50)
+    nombre = models.CharField((""), max_length=50)
+    compania = models.CharField((""), max_length=50)
+    telefono = models.CharField((""), max_length=50)
+    correo = models.CharField((""), max_length=50)
+    direccion = models.CharField((""), max_length=130)
+    suburbio = models.CharField((""), max_length=130)
+    ciudad = models.CharField((""), max_length=50)
+    codigo_postal = models.CharField((""), max_length=50)
+    estado = models.CharField((""), max_length=50)
+    pais = models.CharField((""), max_length=50)
+    pais_iso = models.CharField((""), max_length=50)
     
 
     class Meta:
@@ -70,15 +70,16 @@ class ordenes_item(models.Model):
     referencia = models.CharField((""), max_length=50)
     orden = models.CharField((""), max_length=50)
 
-    item_nombre = models.CharField((""), max_length=50)
-    item_peso = models.CharField((""), max_length=50)
-    item_precio = models.CharField((""), max_length=50)
-    item_sku = models.CharField((""), max_length=50)
-    item_pais_manofacturacion = models.CharField((""), max_length=130)
-    item_hscode_exportacion = models.CharField((""), max_length=130)
-    item_hscode_importacion = models.CharField((""), max_length=50)
-    item_size = models.CharField((""), max_length=50)
-    item_color = models.CharField((""), max_length=50)
+    nombre = models.CharField((""), max_length=50)
+    peso = models.FloatField(null=True, blank=True, default=0.0)
+    precio = models.FloatField(null=True, blank=True, default=0.0)
+    sku = models.CharField((""), max_length=50)
+    pais_manofacturacion = models.CharField((""), max_length=130)
+    hscode_exportacion = models.CharField((""), max_length=130)
+    hscode_importacion = models.CharField((""), max_length=50)
+    size = models.CharField((""), max_length=50)
+    color = models.CharField((""), max_length=50)
+    otros = models.CharField((""), max_length=100)
 
     class Meta:
         verbose_name = "ordenes_item"
@@ -91,12 +92,12 @@ class ordenes_caja(models.Model):
     referencia = models.CharField((""), max_length=50)
     orden = models.CharField((""), max_length=50)
 
-    caja_numero = models.CharField((""), max_length=130)
-    caja_nombre = models.CharField((""), max_length=130)
-    caja_alto = models.CharField((""), max_length=50)
-    caja_ancho = models.CharField((""), max_length=50)
-    caja_largo = models.CharField((""), max_length=50)
-    caja_peso = models.CharField((""), max_length=50)
+    numero = models.IntegerField(null=True, blank=True)
+    nombre = models.CharField((""), max_length=130)
+    alto = models.FloatField(null=True, blank=True, default=0.0)
+    ancho = models.FloatField(null=True, blank=True, default=0.0)
+    largo = models.FloatField(null=True, blank=True, default=0.0)
+    peso = models.FloatField(null=True, blank=True, default=0.0)
   
     class Meta:
         verbose_name = "ordenes_caja"
